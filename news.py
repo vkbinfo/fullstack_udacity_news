@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 import psycopg2
 
 
@@ -18,11 +19,11 @@ def get_most_popular_three_article():
 
 
 def get_most_popular_authors():
-    query = "select authors.name, sum(result.num)as total_views from" \
+    query = "select authors.name, sum(result.num)as total_views from"\
             " (select replace(path,'/article/', '')" \
-            " as path_slug, count(*) as num from log group by path having path" \
-            " like '/article/%')as result," \
-            " articles, authors where result.path_slug = articles.slug " \
+            " as path_slug, count(*) as num from log group by "\
+            "path having path like '/article/%')as result," \
+            " articles, authors where result.path_slug = articles.slug "\
             "and articles.author=authors.id " \
             "group by authors.name order by total_views desc;"
     db = psycopg2.connect("dbname=news")
